@@ -1,41 +1,33 @@
 package br.jgsm.seletivoSeplag.modules.pessoa;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import br.jgsm.seletivoSeplag.modules.crud.CrudController;
+import br.jgsm.seletivoSeplag.modules.crud.SpecificationBuilder;
 import br.jgsm.seletivoSeplag.modules.pessoa.dtos.PessoaDTO;
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-@Controller
+@RestController
 @RequestMapping("/pessoa")
-public class PessoaController {
+public class PessoaController extends CrudController<Pessoa, PessoaRepository, Specification<Pessoa>, PessoaDTO, PessoaMapper> {
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
-
-    @Autowired
-    private PessoaMapper pessoaMapper;
-
-    @GetMapping
-    public ResponseEntity<Page<Pessoa>> listarPessoas(Pageable pageable) {
-        return ResponseEntity.ok(pessoaRepository.findAll(pageable));
+    public PessoaController(PessoaRepository repository, PessoaMapper mapper, SpecificationBuilder<Pessoa> specBuilder) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.specBuilder = specBuilder;
     }
+
 
     @PostMapping
     public ResponseEntity<Pessoa> criarPessoa(@RequestBody @Valid PessoaDTO pessoaDTO) {
-        Pessoa pessoa = pessoaMapper.toEntity(pessoaDTO);
-        return ResponseEntity.ok(pessoaRepository.save(pessoa));
+        Pessoa pessoa = mapper.toEntity(pessoaDTO);
+        return ResponseEntity.ok(repository.save(pessoa));
     }
-    
 
 }
