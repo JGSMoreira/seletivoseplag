@@ -1,0 +1,21 @@
+meta {
+  name: Adicionar Pessoa
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/pessoa
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Joao",
+    "sexo": "Masculino",
+    "dataNascimento": "2001-05-27",
+    "mae": "",
+    "pai": ""
+  }
+}
