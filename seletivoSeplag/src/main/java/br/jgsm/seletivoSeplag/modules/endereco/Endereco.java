@@ -1,28 +1,25 @@
 package br.jgsm.seletivoSeplag.modules.endereco;
 
 import br.jgsm.seletivoSeplag.modules.cidade.Cidade;
+import br.jgsm.seletivoSeplag.modules.crud.CrudEntity;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "endereco")
-public class Endereco {
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@AttributeOverride(name = "id", column = @Column(name = "end_id", nullable = false, columnDefinition = "INT"))
+public class Endereco extends CrudEntity{
     
-
-    @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    @Column(name = "end_id", nullable = false, columnDefinition = "INT")
-    private int id;
-
     @Column(name = "end_tipo_logradouro", nullable = false, columnDefinition = "VARCHAR(50)")
     private String tipoLogradouro;
 

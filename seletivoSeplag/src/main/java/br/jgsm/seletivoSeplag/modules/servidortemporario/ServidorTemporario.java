@@ -2,26 +2,24 @@ package br.jgsm.seletivoSeplag.modules.servidortemporario;
 
 import java.util.Date;
 
+import br.jgsm.seletivoSeplag.modules.crud.CrudEntity;
 import br.jgsm.seletivoSeplag.modules.pessoa.Pessoa;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "servidor_temporario")
-public class ServidorTemporario {
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@AttributeOverride(name = "id", column = @Column(name = "st_id", nullable = false, columnDefinition = "INT"))
+public class ServidorTemporario extends CrudEntity {
     
-    @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    @Column(name = "st_id", nullable = false, columnDefinition = "INT")
-    private int id;
-
     @Column(name = "st_data_admissao", nullable = false, columnDefinition = "DATE")
     private Date dataAdmissao;
 

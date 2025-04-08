@@ -13,12 +13,16 @@ public class PessoaSpecificationBuilder implements SpecificationBuilder<Pessoa> 
     @Override
     public Specification<Pessoa> buildFromParams(Map<String, String> params) {
         return Specification
-            .where(nomeContem(params.get("nome")));
+            .where(nomeLike(params.get("nome")));
     }
 
-    private Specification<Pessoa> nomeContem(String nome) {
-        return nome == null ? null :
-            (root, query, cb) -> cb.like(cb.lower(root.get("nome")), "%" + nome.toLowerCase() + "%");
+    private Specification<Pessoa> nomeLike(String nome) {
+        return (root, query, cb) -> {
+            if (isBlank(nome))
+                return cb.conjunction();
+
+            return cb.like(cb.lower(root.get("nome")), "%" + nome.toLowerCase() + "%");
+        };
     }
     
 }
