@@ -1,7 +1,9 @@
 package br.jgsm.seletivoSeplag.modules.crud;
 
 import java.beans.Transient;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +34,32 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
 
     @SuppressWarnings("unchecked")
     public CrudController() {
-        this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0];
     }
 
     @GetMapping
-    public Page<Object> listar(@RequestParam Map<String, String> params, Pageable pageable) throws ClassNotFoundException {
+    public Page<Object> listar(@RequestParam Map<String, String> params, Pageable pageable)
+            throws ClassNotFoundException {
         Specification<T> spec = specBuilder.buildFromParams(params);
-        
         Page<T> page = repository.findAll(spec, pageable);
-        List<Object> entitiesDTO = page.getContent().stream().map(item -> mapper.toListarDTO(item)).toList();
+        List<Object> entitiesDTO;
+        try {
+            Method toListarDTOMethod = mapper.getClass().getMethod("toListarDTO", Object.class);
+
+            entitiesDTO = page.getContent().stream()
+                    .map(item -> {
+                        try {
+                            return toListarDTOMethod.invoke(mapper, item);
+                        } catch (Exception e) {
+                            return item;
+                        }
+                    })
+                    .toList();
+
+        } catch (NoSuchMethodException e) {
+            entitiesDTO = new ArrayList<>(page.getContent());
+        }
         return new PageImpl<>(entitiesDTO, pageable, page.getTotalElements());
     }
 
@@ -56,9 +75,9 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
     public ResponseEntity<T> atualizar(@PathVariable Integer id, @RequestBody @Valid D dto) {
         T entity = repository.findById(id).orElse(null);
 
-        if (entity == null) 
+        if (entity == null)
             return ResponseEntity.notFound().build();
-        
+
         mapper.update(entity, dto);
         return ResponseEntity.ok(repository.save(entity));
     }
@@ -67,9 +86,9 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
     public ResponseEntity<T> buscarPorId(@PathVariable Integer id) {
         T entity = repository.findById(id).orElse(null);
 
-        if (entity == null) 
+        if (entity == null)
             return ResponseEntity.notFound().build();
-        
+
         return ResponseEntity.ok(entity);
     }
 
@@ -78,12 +97,11 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         T entity = repository.findById(id).orElse(null);
 
-        if (entity == null) 
+        if (entity == null)
             return ResponseEntity.notFound().build();
-        
+
         repository.delete(entity);
         return ResponseEntity.noContent().build();
     }
 
-    
 }
