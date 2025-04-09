@@ -1,6 +1,7 @@
 package br.jgsm.seletivoSeplag.modules.endereco.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -12,10 +13,10 @@ public class EnderecoDTO {
     @NotBlank(message = "Logradouro é obrigatório")
     private String logradouro;
 
-    @NotBlank(message = "Número é obrigatório")
+    @NotNull(message = "Número é obrigatório")
     private int numero;
 
     private String bairro;
     
-    Integer cidade;
+    private Integer cidade;
 }

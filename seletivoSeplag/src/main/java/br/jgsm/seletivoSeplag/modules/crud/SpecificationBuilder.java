@@ -11,4 +11,8 @@ public interface SpecificationBuilder<T> {
     default boolean isBlank(String str) {
         return str == null || str.isBlank();
     }
+
+    default boolean isNumeric(String str) {
+        return str != null && str.matches("\\d+");
+    }
 }

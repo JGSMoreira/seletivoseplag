@@ -3,26 +3,26 @@ package br.jgsm.seletivoSeplag.modules.servidorefetivo;
 import br.jgsm.seletivoSeplag.modules.crud.CrudEntity;
 import br.jgsm.seletivoSeplag.modules.pessoa.Pessoa;
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@Table(name = "servidor_temporario")
+@Table(name = "servidor_efetivo")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @AttributeOverride(name = "id", column = @Column(name = "se_id", nullable = false, columnDefinition = "INT"))
 public class ServidorEfetivo extends CrudEntity {
 
-
     @Column(name = "se_matricula", nullable = false, columnDefinition = "VARCHAR(20)")
     private String matricula;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pes_id", referencedColumnName = "pes_id")
     private Pessoa pessoa;
 }

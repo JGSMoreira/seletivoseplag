@@ -5,10 +5,11 @@ import java.util.Date;
 import br.jgsm.seletivoSeplag.modules.crud.CrudEntity;
 import br.jgsm.seletivoSeplag.modules.pessoa.Pessoa;
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,7 @@ public class ServidorTemporario extends CrudEntity {
     @Column(name = "st_data_demissao", nullable = true, columnDefinition = "DATE")
     private Date dataDemissao;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pes_id", referencedColumnName = "pes_id")
     private Pessoa pessoa;
 }

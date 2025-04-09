@@ -1,5 +1,6 @@
 package br.jgsm.seletivoSeplag.modules.crud;
 
+import java.beans.Transient;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
@@ -39,12 +40,14 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
     }
 
     @PostMapping
+    @Transient
     public ResponseEntity<T> criar(@RequestBody @Valid D dto) {
         T entity = mapper.toEntity(dto);
         return ResponseEntity.ok(repository.save(entity));
     }
 
     @PutMapping("/{id}")
+    @Transient
     public ResponseEntity<T> atualizar(@PathVariable Integer id, @RequestBody @Valid D dto) {
         T entity = repository.findById(id).orElse(null);
 
@@ -66,6 +69,7 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
     }
 
     @DeleteMapping("/{id}")
+    @Transient
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         T entity = repository.findById(id).orElse(null);
 

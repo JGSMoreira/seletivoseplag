@@ -3,13 +3,17 @@ package br.jgsm.seletivoSeplag.modules.pessoa;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.jgsm.seletivoSeplag.modules.crud.CrudEntity;
 import br.jgsm.seletivoSeplag.modules.fotopessoa.FotoPessoa;
+import br.jgsm.seletivoSeplag.modules.lotacao.Lotacao;
 import br.jgsm.seletivoSeplag.modules.pessoaendereco.PessoaEndereco;
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,10 +40,16 @@ public class Pessoa extends CrudEntity{
     @Column(name = "pes_pai", nullable = true, columnDefinition = "VARCHAR(200)")
     private String pai;
 
-    @ManyToMany(mappedBy = "pessoa")
+    @JsonIgnoreProperties("pessoa")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<PessoaEndereco> pessoaEnderecos;
 
-    @ManyToMany(mappedBy = "pessoa")
+    @JsonIgnoreProperties("pessoa")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<FotoPessoa> fotos;
+
+    @JsonIgnoreProperties("pessoa")
+    @OneToMany(mappedBy = "pessoa")
+    private List<Lotacao> lotacoes;
 
 }

@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 public class Lotacao extends CrudEntity {
 
     @Column(name = "lot_data_lotacao", nullable = false, columnDefinition = "DATE")
-    private Date dataLocacao;
+    private Date dataLotacao;
     
     @Column(name = "lot_data_remocao", nullable = true, columnDefinition = "DATE")
     private Date dataRemocao;

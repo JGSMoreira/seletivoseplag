@@ -1,0 +1,39 @@
+meta {
+  name: Adicionar
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/{{rota}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Joao",
+    "sexo": "Masculino",
+    "dataNascimento": "2001-05-27",
+    "mae": "",
+    "pai": "",
+    "matricula": "111111",
+    "lotacoes": [
+      {
+        "dataLotacao": "2025-04-08",
+        "dataRemocao": null,
+        "portaria": "11111",
+        "unidade": 1
+      }
+    ],
+    "enderecos": [
+      {
+        "tipoLogradouro": "Casa",
+        "logradouro": "Rua dos Bobos",
+        "numero": 0,
+        "bairro": "Segredo",
+        "cidade": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+meta {
+  name: Adicionar
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/{{rota}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Unidade 1",
+    "sigla": "UN1"
+  }
+}

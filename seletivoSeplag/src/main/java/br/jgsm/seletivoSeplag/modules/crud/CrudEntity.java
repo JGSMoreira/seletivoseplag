@@ -17,6 +17,6 @@ public class CrudEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, columnDefinition = "INT")
     @EqualsAndHashCode.Include
-    private Long id;
+    private Integer id;
     
 }

@@ -1,7 +1,11 @@
 package br.jgsm.seletivoSeplag.modules.pessoa.dtos;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import br.jgsm.seletivoSeplag.modules.endereco.dtos.EnderecoDTO;
+import br.jgsm.seletivoSeplag.modules.lotacao.dtos.LotacaoDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -22,6 +26,8 @@ public class PessoaDTO {
 
     private String pai;
 
-    
+    List<@Valid LotacaoDTO> lotacoes;
+
+    List<@Valid EnderecoDTO> enderecos;
 
 }

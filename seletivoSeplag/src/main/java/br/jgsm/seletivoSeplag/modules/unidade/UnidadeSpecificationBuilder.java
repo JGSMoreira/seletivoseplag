@@ -1,4 +1,4 @@
-package br.jgsm.seletivoSeplag.modules.endereco;
+package br.jgsm.seletivoSeplag.modules.unidade;
 
 import java.util.Map;
 
@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 import br.jgsm.seletivoSeplag.modules.crud.SpecificationBuilder;
 
 @Component
-public class EnderecoSpecificationBuilder implements SpecificationBuilder<Endereco> {
+public class UnidadeSpecificationBuilder implements SpecificationBuilder<Unidade> {
 
     @Override
-    public Specification<Endereco> buildFromParams(Map<String, String> params) {
+    public Specification<Unidade> buildFromParams(Map<String, String> params) {
         return Specification
             .where(nomeLike(params.get("nome"))
             .and(ufEqual(params.get("uf"))));
     }
 
-    private Specification<Endereco> nomeLike(String nome) {
+    private Specification<Unidade> nomeLike(String nome) {
         return (root, query, cb) -> {
             if (isBlank(nome))
                 return cb.conjunction();
@@ -26,7 +26,7 @@ public class EnderecoSpecificationBuilder implements SpecificationBuilder<Endere
         };
     }
 
-    private Specification<Endereco> ufEqual(String uf) {
+    private Specification<Unidade> ufEqual(String uf) {
         return (root, query, cb) -> {
             if (isBlank(uf)) 
                 return cb.conjunction();

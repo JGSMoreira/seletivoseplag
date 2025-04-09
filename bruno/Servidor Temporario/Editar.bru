@@ -1,0 +1,31 @@
+meta {
+  name: Editar
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/{{rota}}/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Joao 2",
+    "sexo": "Masculino",
+    "dataNascimento": "2001-05-27",
+    "mae": "",
+    "pai": "",
+    "dataAdmissao": "2025-04-08",
+    "dataDemissao": "2025-04-09",
+    "lotacoes": [
+      {
+        "dataLotacao": "2025-04-08",
+        "dataRemocao": "2025-04-09",
+        "portaria": "11111",
+        "unidade": 1
+      }
+    ]
+  }
+}

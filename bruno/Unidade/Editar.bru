@@ -1,0 +1,18 @@
+meta {
+  name: Editar
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/{{rota}}/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Unidade 1-B",
+    "sigla": "UN1B"
+  }
+}
