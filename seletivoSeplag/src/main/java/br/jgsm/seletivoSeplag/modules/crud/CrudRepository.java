@@ -10,4 +10,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface CrudRepository<T extends CrudEntity, Id> extends JpaRepository<T, Integer>{
     
     Page<T> findAll(Specification<T> spec, Pageable pageable);
+
 }

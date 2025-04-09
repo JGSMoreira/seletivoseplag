@@ -1,7 +1,10 @@
 package br.jgsm.seletivoSeplag.modules.unidadeendereco;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.jgsm.seletivoSeplag.modules.endereco.Endereco;
 import br.jgsm.seletivoSeplag.modules.unidade.Unidade;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +28,8 @@ public class UnidadeEndereco {
     @JoinColumn(name = "unid_id", referencedColumnName = "unid_id")
     private Unidade unidade;
 
-    @ManyToOne
+    @JsonIgnoreProperties("unidade")
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "end_id", referencedColumnName = "end_id")
     private Endereco endereco;
 }

@@ -1,5 +1,9 @@
 package br.jgsm.seletivoSeplag.modules.unidade.dtos;
 
+import java.util.List;
+
+import br.jgsm.seletivoSeplag.modules.endereco.dtos.EnderecoDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -11,4 +15,6 @@ public class UnidadeDTO {
 
     @NotBlank(message = "Sigla não pode ser nulo ou vazio")
     String sigla;
+
+    List<@Valid EnderecoDTO> enderecos;
 }

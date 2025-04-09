@@ -12,5 +12,7 @@ public interface CrudMapper<E extends CrudEntity, D> {
 
     @InheritConfiguration(name = "toEntity")
     void update(@MappingTarget E entity, D dto);
+
+    Object toListarDTO(E item);
     
 }

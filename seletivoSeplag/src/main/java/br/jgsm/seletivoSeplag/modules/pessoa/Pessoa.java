@@ -1,7 +1,10 @@
 package br.jgsm.seletivoSeplag.modules.pessoa;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -31,6 +34,9 @@ public class Pessoa extends CrudEntity{
     @Column(name = "pes_data_nascimento", nullable = true)
     private LocalDate dataNascimento;
 
+    @Formula("DATE_PART('year', AGE(CURRENT_DATE, pes_data_nascimento))")
+    private int idade;
+
     @Column(name = "pes_sexo", nullable = true, columnDefinition = "VARCHAR(9)")
     private String sexo;
 
@@ -41,15 +47,15 @@ public class Pessoa extends CrudEntity{
     private String pai;
 
     @JsonIgnoreProperties("pessoa")
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private List<PessoaEndereco> pessoaEnderecos;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaEndereco> pessoaEnderecos = new ArrayList<>();
 
     @JsonIgnoreProperties("pessoa")
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private List<FotoPessoa> fotos;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FotoPessoa> fotos = new ArrayList<>();
 
     @JsonIgnoreProperties("pessoa")
-    @OneToMany(mappedBy = "pessoa")
-    private List<Lotacao> lotacoes;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lotacao> lotacoes = new ArrayList<>();
 
 }

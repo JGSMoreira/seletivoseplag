@@ -1,5 +1,6 @@
 package br.jgsm.seletivoSeplag.modules.unidade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.jgsm.seletivoSeplag.modules.crud.CrudEntity;
@@ -26,5 +27,5 @@ public class Unidade extends CrudEntity {
     private String sigla;
 
     @ManyToMany(mappedBy = "unidade")
-    private List<UnidadeEndereco> unidadeEnderecos;
+    private List<UnidadeEndereco> unidadeEnderecos = new ArrayList<>();
 }

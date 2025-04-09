@@ -2,10 +2,12 @@ package br.jgsm.seletivoSeplag.modules.crud;
 
 import java.beans.Transient;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,9 +36,12 @@ public abstract class CrudController<T extends CrudEntity, R extends CrudReposit
     }
 
     @GetMapping
-    public Page<T> listar(@RequestParam Map<String, String> params, Pageable pageable) {
+    public Page<Object> listar(@RequestParam Map<String, String> params, Pageable pageable) throws ClassNotFoundException {
         Specification<T> spec = specBuilder.buildFromParams(params);
-        return repository.findAll(spec, pageable);
+        
+        Page<T> page = repository.findAll(spec, pageable);
+        List<Object> entitiesDTO = page.getContent().stream().map(item -> mapper.toListarDTO(item)).toList();
+        return new PageImpl<>(entitiesDTO, pageable, page.getTotalElements());
     }
 
     @PostMapping
