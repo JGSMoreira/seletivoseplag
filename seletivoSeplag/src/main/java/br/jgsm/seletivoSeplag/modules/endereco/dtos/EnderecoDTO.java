@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class EnderecoDTO {
-    
+
     @NotBlank(message = "Tipo de logradouro é obrigatório")
     private String tipoLogradouro;
 
@@ -17,6 +17,6 @@ public class EnderecoDTO {
     private int numero;
 
     private String bairro;
-    
+
     private Integer cidade;
 }
