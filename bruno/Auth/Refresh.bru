@@ -1,0 +1,11 @@
+meta {
+  name: Refresh
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/{{rota}}/refresh
+  body: none
+  auth: inherit
+}
